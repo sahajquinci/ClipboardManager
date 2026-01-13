@@ -80,6 +80,13 @@ xcodebuild -project ClipboardManager.xcodeproj \
 ./build.sh
 ```
 
+## Donation
+
+If this app saves you time feel free to show your appreciation using the
+following button :D
+
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/donate?hosted_button_id=W8J2B4E92NEQ2)
+
 ## License
 
 Free to use and modify for personal use.
