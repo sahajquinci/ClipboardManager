@@ -301,6 +301,12 @@ struct ContentView: View {
     private func handleKeyEvent(_ event: NSEvent) -> NSEvent? {
         let keyCode = Int(event.keyCode)
         
+        // Handle ESC key to close popover
+        if keyCode == 53 { // ESC
+            appDelegate.closePopover()
+            return nil
+        }
+        
         // Handle arrow keys for navigation
         if keyCode == 125 { // Down arrow
             searchFieldFocused = false
