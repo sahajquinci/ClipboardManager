@@ -1,0 +1,120 @@
+{
+  "source": "/Users/squinci/Source/Repos/CopyQ/ClipboardManager/ContentView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Clear History",
+        "location": {
+          "startingColumn": 16,
+          "startingLine": 212
+        }
+      },
+      {
+        "comment": "",
+        "key": "Clear History",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 115
+        }
+      },
+      {
+        "comment": "",
+        "key": "Quit",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 123
+        }
+      },
+      {
+        "comment": "",
+        "key": "Clipboard History",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 87
+        }
+      },
+      {
+        "comment": "",
+        "key": "Launch at Login",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 100
+        }
+      },
+      {
+        "comment": "",
+        "key": "Search clipboard...",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 131
+        }
+      },
+      {
+        "comment": "",
+        "key": "No clipboard history",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 161
+        }
+      },
+      {
+        "comment": "",
+        "key": "No results",
+        "location": {
+          "startingColumn": 72,
+          "startingLine": 161
+        }
+      },
+      {
+        "comment": "",
+        "key": "↑↓ Navigate • ⏎ Select • ⌘⇧V Toggle",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 200
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld items",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 204
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cancel",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 213
+        }
+      },
+      {
+        "comment": "",
+        "key": "Clear",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 214
+        }
+      },
+      {
+        "comment": "",
+        "key": "Are you sure you want to clear all clipboard history?",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 219
+        }
+      },
+      {
+        "comment": "",
+        "key": "Copy",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 437
+        }
+      }
+    ]
+  },
+  "version": 1
+}

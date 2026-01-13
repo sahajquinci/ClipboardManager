@@ -1,0 +1,12 @@
+{
+  "/Users/squinci/Source/Repos/CopyQ/ClipboardManager/ClipboardManagerApp.swift" : {
+    "abi-baseline-json" : "/Users/squinci/Source/Repos/CopyQ/build/Build/Intermediates.noindex/ClipboardManager.build/Release/ClipboardManager.build/Objects-normal/arm64/ClipboardManager.abi.json",
+    "const-values" : "/Users/squinci/Source/Repos/CopyQ/build/Build/Intermediates.noindex/ClipboardManager.build/Release/ClipboardManager.build/Objects-normal/arm64/ClipboardManager-primary.swiftconstvalues",
+    "dependencies" : "/Users/squinci/Source/Repos/CopyQ/build/Build/Intermediates.noindex/ClipboardManager.build/Release/ClipboardManager.build/Objects-normal/arm64/ClipboardManager-primary.d",
+    "diagnostics" : "/Users/squinci/Source/Repos/CopyQ/build/Build/Intermediates.noindex/ClipboardManager.build/Release/ClipboardManager.build/Objects-normal/arm64/ClipboardManager-primary.dia",
+    "objc-header" : "/Users/squinci/Source/Repos/CopyQ/build/Build/Intermediates.noindex/ClipboardManager.build/Release/ClipboardManager.build/Objects-normal/arm64/ClipboardManager-Swift.h",
+    "swiftdoc" : "/Users/squinci/Source/Repos/CopyQ/build/Build/Intermediates.noindex/ClipboardManager.build/Release/ClipboardManager.build/Objects-normal/arm64/ClipboardManager.swiftdoc",
+    "swiftmodule" : "/Users/squinci/Source/Repos/CopyQ/build/Build/Intermediates.noindex/ClipboardManager.build/Release/ClipboardManager.build/Objects-normal/arm64/ClipboardManager.swiftmodule",
+    "swiftsourceinfo" : "/Users/squinci/Source/Repos/CopyQ/build/Build/Intermediates.noindex/ClipboardManager.build/Release/ClipboardManager.build/Objects-normal/arm64/ClipboardManager.swiftsourceinfo"
+  }
+}
