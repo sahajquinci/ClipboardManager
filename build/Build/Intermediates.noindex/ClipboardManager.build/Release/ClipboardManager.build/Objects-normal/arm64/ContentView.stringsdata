@@ -7,7 +7,7 @@
         "key": "Clear History",
         "location": {
           "startingColumn": 16,
-          "startingLine": 200
+          "startingLine": 198
         }
       },
       {
@@ -71,7 +71,7 @@
         "key": "↑↓ Navigate • ⏎ Select • ⌘⇧V Toggle",
         "location": {
           "startingColumn": 22,
-          "startingLine": 188
+          "startingLine": 186
         }
       },
       {
@@ -79,7 +79,7 @@
         "key": "%lld items",
         "location": {
           "startingColumn": 22,
-          "startingLine": 192
+          "startingLine": 190
         }
       },
       {
@@ -87,7 +87,7 @@
         "key": "Cancel",
         "location": {
           "startingColumn": 20,
-          "startingLine": 201
+          "startingLine": 199
         }
       },
       {
@@ -95,7 +95,7 @@
         "key": "Clear",
         "location": {
           "startingColumn": 20,
-          "startingLine": 202
+          "startingLine": 200
         }
       },
       {
@@ -103,7 +103,7 @@
         "key": "Are you sure you want to clear all clipboard history?",
         "location": {
           "startingColumn": 18,
-          "startingLine": 207
+          "startingLine": 205
         }
       },
       {
@@ -111,7 +111,7 @@
         "key": "Copy",
         "location": {
           "startingColumn": 23,
-          "startingLine": 454
+          "startingLine": 477
         }
       }
     ]

@@ -11,6 +11,7 @@ import SwiftUI
 class ClipboardMonitor: ObservableObject {
     private var timer: Timer?
     private var lastChangeCount: Int = 0
+    private var shouldIgnoreNextChange = false
     
     func startMonitoring() {
         lastChangeCount = NSPasteboard.general.changeCount
@@ -25,11 +26,21 @@ class ClipboardMonitor: ObservableObject {
         timer = nil
     }
     
+    func pauseMonitoring() {
+        shouldIgnoreNextChange = true
+    }
+    
     private func checkClipboard() {
         let pasteboard = NSPasteboard.general
         
         if pasteboard.changeCount != lastChangeCount {
             lastChangeCount = pasteboard.changeCount
+            
+            // Skip this change if we're ignoring it
+            if shouldIgnoreNextChange {
+                shouldIgnoreNextChange = false
+                return
+            }
             
             if let string = pasteboard.string(forType: .string) {
                 ClipboardStore.shared.addItem(content: .text(string))

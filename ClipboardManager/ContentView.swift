@@ -173,9 +173,7 @@ struct ContentView: View {
                     }
                     .onChange(of: selectedItemId) { newValue in
                         if let id = newValue {
-                            withAnimation {
-                                proxy.scrollTo(id, anchor: .center)
-                            }
+                            proxy.scrollTo(id, anchor: .center)
                         }
                     }
                 }
@@ -220,9 +218,24 @@ struct ContentView: View {
                 return self.handleKeyEvent(event)
             }
         }
+        .onChange(of: appDelegate.popoverJustOpened) { justOpened in
+            if justOpened {
+                // Reset selection to first item when popover opens
+                if !filteredItems.isEmpty {
+                    selectedItemId = filteredItems.first?.id
+                }
+                // Focus search field
+                searchFieldFocused = true
+            }
+        }
     }
     
     private func copyItem(_ item: ClipboardItem) {
+        // Pause monitoring to avoid re-adding the same item
+        if let monitor = (NSApp.delegate as? AppDelegate)?.clipboardMonitor {
+            monitor.pauseMonitoring()
+        }
+        
         let pasteboard = NSPasteboard.general
         pasteboard.clearContents()
         
@@ -401,7 +414,7 @@ struct ClipboardItemRow: View {
                         .onHover { hovering in
                             isHovering = hovering
                             if hovering && string.count > 100 {
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                                     if isHovering {
                                         showPreview = true
                                     }
@@ -414,14 +427,24 @@ struct ClipboardItemRow: View {
                             get: { showPreview || (showPreviewForSelected && string.count > 100) },
                             set: { showPreview = $0 }
                         ), arrowEdge: .trailing) {
-                            VStack(spacing: 0) {
+                            ScrollView {
                                 Text(string)
                                     .font(.system(.body, design: .monospaced))
                                     .textSelection(.enabled)
                                     .padding()
-                                    .fixedSize(horizontal: false, vertical: true)
+                                    .frame(maxWidth: 500)
                             }
-                            .frame(maxWidth: 500, maxHeight: 400)
+                            .frame(width: 500, height: 400)
+                            .onAppear {
+                                // Add local key monitor for ESC key to close preview
+                                NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
+                                    if event.keyCode == 53 { // ESC key
+                                        showPreview = false
+                                        return nil
+                                    }
+                                    return event
+                                }
+                            }
                         }
                 case .image(let nsImage):
                     Image(nsImage: nsImage)

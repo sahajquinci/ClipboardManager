@@ -15,6 +15,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     var popover: NSPopover!
     var clipboardMonitor: ClipboardMonitor!
     var hotKeyRef: EventHotKeyRef?
+    @Published var popoverJustOpened = false
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Create the status bar item
@@ -46,6 +47,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
             } else {
                 popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
                 NSApp.activate(ignoringOtherApps: true)
+                // Trigger selection reset
+                popoverJustOpened = true
+                DispatchQueue.main.async {
+                    self.popoverJustOpened = false
+                }
             }
         }
     }
