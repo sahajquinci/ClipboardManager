@@ -73,12 +73,32 @@ class ClipboardStore: ObservableObject {
     static let shared = ClipboardStore()
     
     @Published var items: [ClipboardItem] = []
+    @Published var totalBytes: Int = 0
     
     private let saveKey = "ClipboardHistory"
     private let maxItems = 1000 // Reasonable limit to prevent excessive memory usage
     
     private init() {
         loadItems()
+        recalculateTotalSize()
+    }
+    
+    private func itemSize(_ content: ClipboardContent) -> Int {
+        switch content {
+        case .text(let string):
+            return string.utf8.count
+        case .image(let nsImage):
+            if let tiffData = nsImage.tiffRepresentation {
+                return tiffData.count
+            }
+            return 0
+        }
+    }
+    
+    private func recalculateTotalSize() {
+        totalBytes = items.reduce(0) { total, item in
+            total + itemSize(item.content)
+        }
     }
     
     func addItem(content: ClipboardContent) {
@@ -93,10 +113,14 @@ class ClipboardStore: ObservableObject {
         }
         
         let item = ClipboardItem(content: content)
+        let newItemSize = itemSize(content)
         items.insert(item, at: 0)
+        totalBytes += newItemSize
         
         // Keep only the most recent items
         if items.count > maxItems {
+            let removedItem = items[maxItems]
+            totalBytes -= itemSize(removedItem.content)
             items = Array(items.prefix(maxItems))
         }
         
@@ -119,12 +143,17 @@ class ClipboardStore: ObservableObject {
     
     func clearHistory() {
         items.removeAll()
+        totalBytes = 0
         saveItems()
     }
     
     func deleteItem(_ item: ClipboardItem) {
-        items.removeAll { $0.id == item.id }
-        saveItems()
+        if let index = items.firstIndex(where: { $0.id == item.id }) {
+            let removedItem = items[index]
+            totalBytes -= itemSize(removedItem.content)
+            items.remove(at: index)
+            saveItems()
+        }
     }
     
     private func saveItems() {
@@ -137,6 +166,7 @@ class ClipboardStore: ObservableObject {
         if let data = UserDefaults.standard.data(forKey: saveKey),
            let decoded = try? JSONDecoder().decode([ClipboardItem].self, from: data) {
             items = decoded
+            recalculateTotalSize()
         }
     }
 }

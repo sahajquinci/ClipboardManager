@@ -55,20 +55,7 @@ struct ContentView: View {
     }
     
     var totalSize: String {
-        let totalBytes = store.items.reduce(0) { total, item in
-            let itemBytes: Int
-            switch item.content {
-            case .text(let string):
-                itemBytes = string.utf8.count
-            case .image(let nsImage):
-                if let tiffData = nsImage.tiffRepresentation {
-                    itemBytes = tiffData.count
-                } else {
-                    itemBytes = 0
-                }
-            }
-            return total + itemBytes
-        }
+        let totalBytes = store.totalBytes
         
         if totalBytes < 1024 {
             return "\(totalBytes) B"
@@ -170,6 +157,7 @@ struct ContentView: View {
                                 ClipboardItemRow(
                                     item: item,
                                     isSelected: selectedItemId == item.id,
+                                    showPreviewForSelected: selectedItemId == item.id,
                                     onCopy: {
                                         copyItem(item)
                                         appDelegate.closePopover()
@@ -373,7 +361,11 @@ struct FilterButton: View {
 struct ClipboardItemRow: View {
     let item: ClipboardItem
     let isSelected: Bool
+    let showPreviewForSelected: Bool
     let onCopy: () -> Void
+    
+    @State private var isHovering = false
+    @State private var showPreview = false
     
     var itemSize: String {
         let bytes: Int
@@ -406,6 +398,31 @@ struct ClipboardItemRow: View {
                     Text(string)
                         .lineLimit(3)
                         .font(.system(.body, design: .default))
+                        .onHover { hovering in
+                            isHovering = hovering
+                            if hovering && string.count > 100 {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                    if isHovering {
+                                        showPreview = true
+                                    }
+                                }
+                            } else {
+                                showPreview = false
+                            }
+                        }
+                        .popover(isPresented: Binding(
+                            get: { showPreview || (showPreviewForSelected && string.count > 100) },
+                            set: { showPreview = $0 }
+                        ), arrowEdge: .trailing) {
+                            VStack(spacing: 0) {
+                                Text(string)
+                                    .font(.system(.body, design: .monospaced))
+                                    .textSelection(.enabled)
+                                    .padding()
+                                    .fixedSize(horizontal: false, vertical: true)
+                            }
+                            .frame(maxWidth: 500, maxHeight: 400)
+                        }
                 case .image(let nsImage):
                     Image(nsImage: nsImage)
                         .resizable()
