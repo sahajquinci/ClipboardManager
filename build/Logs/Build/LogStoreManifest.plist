@@ -6,7 +6,7 @@
 	<integer>12</integer>
 	<key>logs</key>
 	<dict>
-		<key>32BC7264-F903-46DB-BC56-00A2E0B8C0FA</key>
+		<key>335493F8-E2E0-48E8-B857-027F3CD31B32</key>
 		<dict>
 			<key>className</key>
 			<string>IDECommandLineBuildLog</string>
@@ -15,7 +15,7 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
 			<key>fileName</key>
-			<string>32BC7264-F903-46DB-BC56-00A2E0B8C0FA.xcactivitylog</string>
+			<string>335493F8-E2E0-48E8-B857-027F3CD31B32.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
@@ -40,15 +40,15 @@
 			<key>signature</key>
 			<string>Building project ClipboardManager with scheme ClipboardManager and configuration Release</string>
 			<key>timeStartedRecording</key>
-			<real>790014955.77009201</real>
+			<real>790080264.45313394</real>
 			<key>timeStoppedRecording</key>
-			<real>790014967.32871604</real>
+			<real>790080278.03236401</real>
 			<key>title</key>
 			<string>Building project ClipboardManager with scheme ClipboardManager and configuration Release</string>
 			<key>uniqueIdentifier</key>
-			<string>32BC7264-F903-46DB-BC56-00A2E0B8C0FA</string>
+			<string>335493F8-E2E0-48E8-B857-027F3CD31B32</string>
 		</dict>
-		<key>EC2750B2-C94E-43BB-8397-B73E13EDE6D7</key>
+		<key>7F35560F-6EEF-4474-8787-3B4124F5557D</key>
 		<dict>
 			<key>className</key>
 			<string>IDECommandLineBuildLog</string>
@@ -57,7 +57,7 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
 			<key>fileName</key>
-			<string>EC2750B2-C94E-43BB-8397-B73E13EDE6D7.xcactivitylog</string>
+			<string>7F35560F-6EEF-4474-8787-3B4124F5557D.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
@@ -82,13 +82,13 @@
 			<key>signature</key>
 			<string>Cleaning project ClipboardManager with scheme ClipboardManager and configuration Release</string>
 			<key>timeStartedRecording</key>
-			<real>790014955.36852205</real>
+			<real>790080264.08037996</real>
 			<key>timeStoppedRecording</key>
-			<real>790014955.768466</real>
+			<real>790080264.45138705</real>
 			<key>title</key>
 			<string>Cleaning project ClipboardManager with scheme ClipboardManager and configuration Release</string>
 			<key>uniqueIdentifier</key>
-			<string>EC2750B2-C94E-43BB-8397-B73E13EDE6D7</string>
+			<string>7F35560F-6EEF-4474-8787-3B4124F5557D</string>
 		</dict>
 	</dict>
 </dict>

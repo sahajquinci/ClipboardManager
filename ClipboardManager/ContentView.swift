@@ -19,6 +19,7 @@ struct ContentView: View {
     @State private var filterImages = true
     @FocusState private var searchFieldFocused: Bool
     @EnvironmentObject var appDelegate: AppDelegate
+    @State private var eventMonitor: Any?
     
     var filteredItems: [ClipboardItem] {
         return store.items.filter { item in
@@ -214,8 +215,17 @@ struct ContentView: View {
                 searchFieldFocused = true
             }
             // Add keyboard event monitor
-            NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
-                return self.handleKeyEvent(event)
+            if eventMonitor == nil {
+                eventMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
+                    return self.handleKeyEvent(event)
+                }
+            }
+        }
+        .onDisappear {
+            // Remove event monitor
+            if let monitor = eventMonitor {
+                NSEvent.removeMonitor(monitor)
+                eventMonitor = nil
             }
         }
         .onChange(of: appDelegate.popoverJustOpened) { justOpened in
