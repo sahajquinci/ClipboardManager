@@ -206,36 +206,25 @@ struct ContentView: View {
             Text("Are you sure you want to clear all clipboard history?")
         }
         .onAppear {
-            // Select first item by default
-            if selectedItemId == nil && !filteredItems.isEmpty {
+            // Select first item by default when popover opens
+            if !filteredItems.isEmpty {
                 selectedItemId = filteredItems.first?.id
             }
             // Focus search field
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 searchFieldFocused = true
             }
-            // Add keyboard event monitor
-            if eventMonitor == nil {
-                eventMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
-                    return self.handleKeyEvent(event)
-                }
+            
+            // Add keyboard event monitor when popover appears
+            eventMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
+                return self.handleKeyEvent(event)
             }
         }
         .onDisappear {
-            // Remove event monitor
+            // Clean up event monitor when popover disappears
             if let monitor = eventMonitor {
                 NSEvent.removeMonitor(monitor)
                 eventMonitor = nil
-            }
-        }
-        .onChange(of: appDelegate.popoverJustOpened) { justOpened in
-            if justOpened {
-                // Reset selection to first item when popover opens
-                if !filteredItems.isEmpty {
-                    selectedItemId = filteredItems.first?.id
-                }
-                // Focus search field
-                searchFieldFocused = true
             }
         }
     }

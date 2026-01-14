@@ -6,7 +6,7 @@
 	<integer>12</integer>
 	<key>logs</key>
 	<dict>
-		<key>335493F8-E2E0-48E8-B857-027F3CD31B32</key>
+		<key>5509173A-78F9-40A4-9C13-49C9DD9D7C59</key>
 		<dict>
 			<key>className</key>
 			<string>IDECommandLineBuildLog</string>
@@ -15,7 +15,7 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
 			<key>fileName</key>
-			<string>335493F8-E2E0-48E8-B857-027F3CD31B32.xcactivitylog</string>
+			<string>5509173A-78F9-40A4-9C13-49C9DD9D7C59.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
@@ -38,17 +38,17 @@
 			<key>schemeIdentifier-sharedScheme</key>
 			<integer>1</integer>
 			<key>signature</key>
-			<string>Building project ClipboardManager with scheme ClipboardManager and configuration Release</string>
+			<string>Cleaning project ClipboardManager with scheme ClipboardManager and configuration Release</string>
 			<key>timeStartedRecording</key>
-			<real>790080264.45313394</real>
+			<real>790090469.19261301</real>
 			<key>timeStoppedRecording</key>
-			<real>790080278.03236401</real>
+			<real>790090469.46699798</real>
 			<key>title</key>
-			<string>Building project ClipboardManager with scheme ClipboardManager and configuration Release</string>
+			<string>Cleaning project ClipboardManager with scheme ClipboardManager and configuration Release</string>
 			<key>uniqueIdentifier</key>
-			<string>335493F8-E2E0-48E8-B857-027F3CD31B32</string>
+			<string>5509173A-78F9-40A4-9C13-49C9DD9D7C59</string>
 		</dict>
-		<key>7F35560F-6EEF-4474-8787-3B4124F5557D</key>
+		<key>BF3BE2D7-6DBF-4FAB-A06E-CC5117665A74</key>
 		<dict>
 			<key>className</key>
 			<string>IDECommandLineBuildLog</string>
@@ -57,7 +57,7 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
 			<key>fileName</key>
-			<string>7F35560F-6EEF-4474-8787-3B4124F5557D.xcactivitylog</string>
+			<string>BF3BE2D7-6DBF-4FAB-A06E-CC5117665A74.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
@@ -80,15 +80,15 @@
 			<key>schemeIdentifier-sharedScheme</key>
 			<integer>1</integer>
 			<key>signature</key>
-			<string>Cleaning project ClipboardManager with scheme ClipboardManager and configuration Release</string>
+			<string>Building project ClipboardManager with scheme ClipboardManager and configuration Release</string>
 			<key>timeStartedRecording</key>
-			<real>790080264.08037996</real>
+			<real>790090469.46868896</real>
 			<key>timeStoppedRecording</key>
-			<real>790080264.45138705</real>
+			<real>790090480.99275005</real>
 			<key>title</key>
-			<string>Cleaning project ClipboardManager with scheme ClipboardManager and configuration Release</string>
+			<string>Building project ClipboardManager with scheme ClipboardManager and configuration Release</string>
 			<key>uniqueIdentifier</key>
-			<string>7F35560F-6EEF-4474-8787-3B4124F5557D</string>
+			<string>BF3BE2D7-6DBF-4FAB-A06E-CC5117665A74</string>
 		</dict>
 	</dict>
 </dict>
