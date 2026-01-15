@@ -61,11 +61,13 @@ struct ClipboardItem: Identifiable, Codable {
     let id: UUID
     let content: ClipboardContent
     let timestamp: Date
+    var ocrText: String? // Extracted text from images via OCR
     
-    init(content: ClipboardContent) {
+    init(content: ClipboardContent, ocrText: String? = nil) {
         self.id = UUID()
         self.content = content
         self.timestamp = Date()
+        self.ocrText = ocrText
     }
 }
 
@@ -101,7 +103,7 @@ class ClipboardStore: ObservableObject {
         }
     }
     
-    func addItem(content: ClipboardContent) {
+    func addItem(content: ClipboardContent, ocrText: String? = nil) {
         // Don't add duplicate consecutive items
         if let lastItem = items.first {
             switch (lastItem.content, content) {
@@ -112,7 +114,7 @@ class ClipboardStore: ObservableObject {
             }
         }
         
-        let item = ClipboardItem(content: content)
+        let item = ClipboardItem(content: content, ocrText: ocrText)
         let newItemSize = itemSize(content)
         items.insert(item, at: 0)
         totalBytes += newItemSize

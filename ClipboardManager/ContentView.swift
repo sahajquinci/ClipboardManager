@@ -49,6 +49,10 @@ struct ContentView: View {
                 case .text(let string):
                     return string.localizedCaseInsensitiveContains(searchText)
                 case .image:
+                    // Search in OCR text if available
+                    if let ocrText = item.ocrText {
+                        return ocrText.localizedCaseInsensitiveContains(searchText)
+                    }
                     return false
                 }
             }
