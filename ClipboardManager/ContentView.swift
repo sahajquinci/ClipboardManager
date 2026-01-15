@@ -49,6 +49,10 @@ struct ContentView: View {
                 case .text(let string):
                     return string.localizedCaseInsensitiveContains(searchText)
                 case .image:
+                    // Search in OCR text if available
+                    if let ocrText = item.ocrText {
+                        return ocrText.localizedCaseInsensitiveContains(searchText)
+                    }
                     return false
                 }
             }
@@ -215,7 +219,13 @@ struct ContentView: View {
                 searchFieldFocused = true
             }
             
-            // Add keyboard event monitor when popover appears
+            // Always remove any existing monitor first (in case it became stale after sleep/background)
+            if let monitor = eventMonitor {
+                NSEvent.removeMonitor(monitor)
+                eventMonitor = nil
+            }
+            
+            // Add fresh keyboard event monitor when popover appears
             eventMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
                 return self.handleKeyEvent(event)
             }
