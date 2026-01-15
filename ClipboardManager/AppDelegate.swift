@@ -15,6 +15,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     var popover: NSPopover!
     var clipboardMonitor: ClipboardMonitor!
     var hotKeyRef: EventHotKeyRef?
+    var keyboardEventMonitor: Any?
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Create the status bar item
@@ -42,10 +43,36 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     @objc func togglePopover() {
         if let button = statusItem.button {
             if popover.isShown {
+                // Clean up keyboard monitor when closing
+                if let monitor = keyboardEventMonitor {
+                    NSEvent.removeMonitor(monitor)
+                    keyboardEventMonitor = nil
+                }
                 popover.performClose(nil)
             } else {
                 popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
                 NSApp.activate(ignoringOtherApps: true)
+                
+                // Set up keyboard monitor when opening - delayed to ensure view is ready
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                    // Remove any existing monitor first
+                    if let monitor = self.keyboardEventMonitor {
+                        NSEvent.removeMonitor(monitor)
+                    }
+                    
+                    // Add fresh keyboard event monitor
+                    self.keyboardEventMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
+                        let keyCode = Int(event.keyCode)
+                        
+                        // Handle ESC key to close popover
+                        if keyCode == 53 { // ESC
+                            self.closePopover()
+                            return nil
+                        }
+                        
+                        return event
+                    }
+                }
             }
         }
     }

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ServiceManagement
+import AppKit
 
 struct ContentView: View {
     @ObservedObject var store = ClipboardStore.shared
@@ -20,6 +21,7 @@ struct ContentView: View {
     @FocusState private var searchFieldFocused: Bool
     @EnvironmentObject var appDelegate: AppDelegate
     @State private var eventMonitor: Any?
+    @State private var showPreviewForSelected = false
     
     var filteredItems: [ClipboardItem] {
         return store.items.filter { item in
@@ -162,7 +164,7 @@ struct ContentView: View {
                                 ClipboardItemRow(
                                     item: item,
                                     isSelected: selectedItemId == item.id,
-                                    showPreviewForSelected: selectedItemId == item.id,
+                                    showPreviewForSelected: $showPreviewForSelected,
                                     onCopy: {
                                         copyItem(item)
                                         appDelegate.closePopover()
@@ -179,6 +181,15 @@ struct ContentView: View {
                     .onChange(of: selectedItemId) { newValue in
                         if let id = newValue {
                             proxy.scrollTo(id, anchor: .center)
+                            
+                            // Show preview for long text items when selected with keyboard
+                            if let item = filteredItems.first(where: { $0.id == id }),
+                               case .text(let string) = item.content,
+                               string.count > 100 {
+                                showPreviewForSelected = true
+                            } else {
+                                showPreviewForSelected = false
+                            }
                         }
                     }
                 }
@@ -210,28 +221,21 @@ struct ContentView: View {
             Text("Are you sure you want to clear all clipboard history?")
         }
         .onAppear {
-            // Select first item by default when popover opens
-            if !filteredItems.isEmpty {
-                selectedItemId = filteredItems.first?.id
-            }
+            // Always reset selection to first item when popover opens
+            selectedItemId = filteredItems.first?.id
+            
             // Focus search field
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 searchFieldFocused = true
             }
             
-            // Always remove any existing monitor first (in case it became stale after sleep/background)
-            if let monitor = eventMonitor {
-                NSEvent.removeMonitor(monitor)
-                eventMonitor = nil
-            }
-            
-            // Add fresh keyboard event monitor when popover appears
+            // Set up event monitor for arrow keys and Enter (ESC is handled by AppDelegate)
             eventMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
                 return self.handleKeyEvent(event)
             }
         }
         .onDisappear {
-            // Clean up event monitor when popover disappears
+            // Clean up event monitor
             if let monitor = eventMonitor {
                 NSEvent.removeMonitor(monitor)
                 eventMonitor = nil
@@ -310,12 +314,6 @@ struct ContentView: View {
     private func handleKeyEvent(_ event: NSEvent) -> NSEvent? {
         let keyCode = Int(event.keyCode)
         
-        // Handle ESC key to close popover
-        if keyCode == 53 { // ESC
-            appDelegate.closePopover()
-            return nil
-        }
-        
         // Handle arrow keys for navigation
         if keyCode == 125 { // Down arrow
             searchFieldFocused = false
@@ -389,7 +387,7 @@ struct FilterButton: View {
 struct ClipboardItemRow: View {
     let item: ClipboardItem
     let isSelected: Bool
-    let showPreviewForSelected: Bool
+    @Binding var showPreviewForSelected: Bool
     let onCopy: () -> Void
     
     @State private var isHovering = false
@@ -439,25 +437,25 @@ struct ClipboardItemRow: View {
                             }
                         }
                         .popover(isPresented: Binding(
-                            get: { showPreview || (showPreviewForSelected && string.count > 100) },
-                            set: { showPreview = $0 }
-                        ), arrowEdge: .trailing) {
-                            ScrollView {
-                                Text(string)
-                                    .font(.system(.body, design: .monospaced))
-                                    .textSelection(.enabled)
-                                    .padding()
-                                    .frame(maxWidth: 500)
+                            get: { showPreview || (isSelected && showPreviewForSelected && string.count > 100) },
+                            set: { 
+                                showPreview = $0
+                                if !$0 {
+                                    showPreviewForSelected = false
+                                }
                             }
-                            .frame(width: 500, height: 400)
-                            .onAppear {
-                                // Add local key monitor for ESC key to close preview
-                                NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
-                                    if event.keyCode == 53 { // ESC key
-                                        showPreview = false
-                                        return nil
-                                    }
-                                    return event
+                        ), arrowEdge: .trailing) {
+                            TextPreviewView(text: string, isPresented: Binding(
+                                get: { showPreview || (isSelected && showPreviewForSelected) },
+                                set: { 
+                                    showPreview = $0
+                                    showPreviewForSelected = $0
+                                }
+                            ))
+                            .onDisappear {
+                                showPreview = false
+                                if isSelected {
+                                    showPreviewForSelected = false
                                 }
                             }
                         }
@@ -495,5 +493,39 @@ struct ClipboardItemRow: View {
         .padding()
         .background(isSelected ? Color.blue.opacity(0.2) : Color.clear)
         .contentShape(Rectangle())
+    }
+}
+
+struct TextPreviewView: View {
+    let text: String
+    @Binding var isPresented: Bool
+    @State private var previewMonitor: Any?
+    
+    var body: some View {
+        ScrollView {
+            Text(text)
+                .font(.system(.body, design: .monospaced))
+                .textSelection(.enabled)
+                .padding()
+                .frame(maxWidth: 500)
+        }
+        .frame(width: 500, height: 400)
+        .onAppear {
+            // Add ESC key handler for preview
+            previewMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
+                if event.keyCode == 53 { // ESC key
+                    isPresented = false
+                    return nil
+                }
+                return event
+            }
+        }
+        .onDisappear {
+            // Clean up monitor when preview closes
+            if let monitor = previewMonitor {
+                NSEvent.removeMonitor(monitor)
+                previewMonitor = nil
+            }
+        }
     }
 }
