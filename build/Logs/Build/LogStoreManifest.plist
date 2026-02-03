@@ -6,7 +6,7 @@
 	<integer>12</integer>
 	<key>logs</key>
 	<dict>
-		<key>E270DBDD-68AC-49E4-BEFF-2FCB4D530262</key>
+		<key>10EE63F1-0592-44D3-82AD-F9AFD93A2744</key>
 		<dict>
 			<key>className</key>
 			<string>IDECommandLineBuildLog</string>
@@ -15,7 +15,49 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
 			<key>fileName</key>
-			<string>E270DBDD-68AC-49E4-BEFF-2FCB4D530262.xcactivitylog</string>
+			<string>10EE63F1-0592-44D3-82AD-F9AFD93A2744.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+				<key>totalNumberOfAnalyzerIssues</key>
+				<integer>0</integer>
+				<key>totalNumberOfErrors</key>
+				<integer>0</integer>
+				<key>totalNumberOfTestFailures</key>
+				<integer>0</integer>
+				<key>totalNumberOfWarnings</key>
+				<integer>0</integer>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>ClipboardManager project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>ClipboardManager</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Building project ClipboardManager with scheme ClipboardManager and configuration Release</string>
+			<key>timeStartedRecording</key>
+			<real>791799477.30394101</real>
+			<key>timeStoppedRecording</key>
+			<real>791799490.77375102</real>
+			<key>title</key>
+			<string>Building project ClipboardManager with scheme ClipboardManager and configuration Release</string>
+			<key>uniqueIdentifier</key>
+			<string>10EE63F1-0592-44D3-82AD-F9AFD93A2744</string>
+		</dict>
+		<key>85A4A94E-E364-4E3F-A4E3-86A913533060</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>85A4A94E-E364-4E3F-A4E3-86A913533060.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
@@ -40,13 +82,13 @@
 			<key>signature</key>
 			<string>Cleaning project ClipboardManager with scheme ClipboardManager and configuration Release</string>
 			<key>timeStartedRecording</key>
-			<real>790165042.13274598</real>
+			<real>791799476.8836</real>
 			<key>timeStoppedRecording</key>
-			<real>790165042.41708505</real>
+			<real>791799477.301718</real>
 			<key>title</key>
 			<string>Cleaning project ClipboardManager with scheme ClipboardManager and configuration Release</string>
 			<key>uniqueIdentifier</key>
-			<string>E270DBDD-68AC-49E4-BEFF-2FCB4D530262</string>
+			<string>85A4A94E-E364-4E3F-A4E3-86A913533060</string>
 		</dict>
 	</dict>
 </dict>

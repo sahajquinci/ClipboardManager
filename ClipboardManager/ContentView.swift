@@ -221,7 +221,7 @@ struct ContentView: View {
             Text("Are you sure you want to clear all clipboard history?")
         }
         .onAppear {
-            // Always reset selection to first item when popover opens
+            // Initial selection setup
             selectedItemId = filteredItems.first?.id
             
             // Focus search field
@@ -232,6 +232,17 @@ struct ContentView: View {
             // Set up event monitor for arrow keys and Enter (ESC is handled by AppDelegate)
             eventMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
                 return self.handleKeyEvent(event)
+            }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .popoverDidShow)) { _ in
+            // Reset selection to first item every time popover is shown
+            searchText = ""
+            selectedItemId = filteredItems.first?.id
+            showPreviewForSelected = false
+            
+            // Focus search field
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                searchFieldFocused = true
             }
         }
         .onDisappear {

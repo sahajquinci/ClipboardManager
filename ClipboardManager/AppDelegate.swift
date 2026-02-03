@@ -10,6 +10,10 @@ import SwiftUI
 import Carbon
 import ServiceManagement
 
+extension Notification.Name {
+    static let popoverDidShow = Notification.Name("popoverDidShow")
+}
+
 class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     var statusItem: NSStatusItem!
     var popover: NSPopover!
@@ -52,6 +56,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
             } else {
                 popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
                 NSApp.activate(ignoringOtherApps: true)
+                
+                // Notify ContentView that popover was shown so it can reset selection
+                NotificationCenter.default.post(name: .popoverDidShow, object: nil)
                 
                 // Set up keyboard monitor when opening - delayed to ensure view is ready
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
