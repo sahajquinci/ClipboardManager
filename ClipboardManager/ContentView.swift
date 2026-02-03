@@ -221,18 +221,17 @@ struct ContentView: View {
             Text("Are you sure you want to clear all clipboard history?")
         }
         .onAppear {
-            // Always reset selection to first item when popover opens
-            selectedItemId = filteredItems.first?.id
-            
-            // Focus search field
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                searchFieldFocused = true
-            }
+            // Reset state when view appears
+            resetViewState()
             
             // Set up event monitor for arrow keys and Enter (ESC is handled by AppDelegate)
             eventMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
                 return self.handleKeyEvent(event)
             }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .popoverDidShow)) { _ in
+            // Reset state every time popover is shown
+            resetViewState()
         }
         .onDisappear {
             // Clean up event monitor
@@ -241,6 +240,14 @@ struct ContentView: View {
                 eventMonitor = nil
             }
         }
+    }
+    
+    private func resetViewState() {
+        // Batch state updates together
+        searchText = ""
+        showPreviewForSelected = false
+        selectedItemId = store.items.first?.id
+        searchFieldFocused = true
     }
     
     private func copyItem(_ item: ClipboardItem) {
@@ -316,11 +323,9 @@ struct ContentView: View {
         
         // Handle arrow keys for navigation
         if keyCode == 125 { // Down arrow
-            searchFieldFocused = false
             moveSelection(up: false)
             return nil
         } else if keyCode == 126 { // Up arrow
-            searchFieldFocused = false
             moveSelection(up: true)
             return nil
         } else if keyCode == 36 { // Return/Enter
@@ -329,13 +334,9 @@ struct ContentView: View {
                 selectAndCopyItem(item)
                 return nil
             }
-        } else if !event.modifierFlags.contains(.command) {
-            // For regular typing, focus search field
-            if !searchFieldFocused {
-                searchFieldFocused = true
-            }
         }
         
+        // Let all other keys pass through to the search field
         return event
     }
     

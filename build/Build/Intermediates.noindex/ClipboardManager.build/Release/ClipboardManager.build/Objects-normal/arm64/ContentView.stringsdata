@@ -7,7 +7,7 @@
         "key": "Clear History",
         "location": {
           "startingColumn": 16,
-          "startingLine": 203
+          "startingLine": 214
         }
       },
       {
@@ -15,7 +15,7 @@
         "key": "Clear History",
         "location": {
           "startingColumn": 23,
-          "startingLine": 107
+          "startingLine": 109
         }
       },
       {
@@ -23,7 +23,7 @@
         "key": "Quit",
         "location": {
           "startingColumn": 23,
-          "startingLine": 115
+          "startingLine": 117
         }
       },
       {
@@ -31,7 +31,7 @@
         "key": "Clipboard History",
         "location": {
           "startingColumn": 26,
-          "startingLine": 79
+          "startingLine": 81
         }
       },
       {
@@ -39,7 +39,7 @@
         "key": "Launch at Login",
         "location": {
           "startingColumn": 26,
-          "startingLine": 92
+          "startingLine": 94
         }
       },
       {
@@ -47,7 +47,7 @@
         "key": "Search clipboard...",
         "location": {
           "startingColumn": 27,
-          "startingLine": 123
+          "startingLine": 125
         }
       },
       {
@@ -55,7 +55,7 @@
         "key": "No clipboard history",
         "location": {
           "startingColumn": 47,
-          "startingLine": 153
+          "startingLine": 155
         }
       },
       {
@@ -63,7 +63,7 @@
         "key": "No results",
         "location": {
           "startingColumn": 72,
-          "startingLine": 153
+          "startingLine": 155
         }
       },
       {
@@ -71,7 +71,7 @@
         "key": "↑↓ Navigate • ⏎ Select • ⌘⇧V Toggle",
         "location": {
           "startingColumn": 22,
-          "startingLine": 191
+          "startingLine": 202
         }
       },
       {
@@ -79,7 +79,7 @@
         "key": "%lld items",
         "location": {
           "startingColumn": 22,
-          "startingLine": 195
+          "startingLine": 206
         }
       },
       {
@@ -87,7 +87,7 @@
         "key": "Cancel",
         "location": {
           "startingColumn": 20,
-          "startingLine": 204
+          "startingLine": 215
         }
       },
       {
@@ -95,7 +95,7 @@
         "key": "Clear",
         "location": {
           "startingColumn": 20,
-          "startingLine": 205
+          "startingLine": 216
         }
       },
       {
@@ -103,7 +103,7 @@
         "key": "Are you sure you want to clear all clipboard history?",
         "location": {
           "startingColumn": 18,
-          "startingLine": 210
+          "startingLine": 221
         }
       },
       {
@@ -111,7 +111,7 @@
         "key": "Copy",
         "location": {
           "startingColumn": 23,
-          "startingLine": 492
+          "startingLine": 491
         }
       }
     ]

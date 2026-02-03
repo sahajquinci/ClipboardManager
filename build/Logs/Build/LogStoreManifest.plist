@@ -6,7 +6,7 @@
 	<integer>12</integer>
 	<key>logs</key>
 	<dict>
-		<key>E270DBDD-68AC-49E4-BEFF-2FCB4D530262</key>
+		<key>AD47996A-316D-4510-8624-6488E54CC816</key>
 		<dict>
 			<key>className</key>
 			<string>IDECommandLineBuildLog</string>
@@ -15,7 +15,7 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
 			<key>fileName</key>
-			<string>E270DBDD-68AC-49E4-BEFF-2FCB4D530262.xcactivitylog</string>
+			<string>AD47996A-316D-4510-8624-6488E54CC816.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
@@ -40,13 +40,13 @@
 			<key>signature</key>
 			<string>Cleaning project ClipboardManager with scheme ClipboardManager and configuration Release</string>
 			<key>timeStartedRecording</key>
-			<real>790165042.13274598</real>
+			<real>791799947.90775895</real>
 			<key>timeStoppedRecording</key>
-			<real>790165042.41708505</real>
+			<real>791799948.16071296</real>
 			<key>title</key>
 			<string>Cleaning project ClipboardManager with scheme ClipboardManager and configuration Release</string>
 			<key>uniqueIdentifier</key>
-			<string>E270DBDD-68AC-49E4-BEFF-2FCB4D530262</string>
+			<string>AD47996A-316D-4510-8624-6488E54CC816</string>
 		</dict>
 	</dict>
 </dict>
