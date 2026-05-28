@@ -269,7 +269,7 @@ struct ContentView: View {
     
     private func selectAndCopyItem(_ item: ClipboardItem) {
         copyItem(item)
-        appDelegate.closePopover()
+        appDelegate.closePopoverAndPaste()
     }
     
     private func setLaunchAtLogin(enabled: Bool) {

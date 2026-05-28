@@ -90,6 +90,31 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         NSApp.hide(nil)
     }
     
+    func closePopoverAndPaste() {
+        popover.performClose(nil)
+        // Deactivate the app to return focus to the previous application
+        NSApp.hide(nil)
+        
+        // Simulate Cmd+V paste after a short delay to allow focus to return
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+            self.simulatePaste()
+        }
+    }
+    
+    private func simulatePaste() {
+        let source = CGEventSource(stateID: .hidSystemState)
+        
+        // Key down: Cmd + V (keyCode 9 = V)
+        let keyDown = CGEvent(keyboardEventSource: source, virtualKey: 9, keyDown: true)
+        keyDown?.flags = .maskCommand
+        keyDown?.post(tap: .cghidEventTap)
+        
+        // Key up: Cmd + V
+        let keyUp = CGEvent(keyboardEventSource: source, virtualKey: 9, keyDown: false)
+        keyUp?.flags = .maskCommand
+        keyUp?.post(tap: .cghidEventTap)
+    }
+    
     func registerHotkey() {
         // Register Command+Shift+V using Carbon Event Manager
         let hotKeyID = EventHotKeyID(signature: OSType(0x4D435143), id: 1) // 'MCLC' signature
