@@ -20,6 +20,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     var clipboardMonitor: ClipboardMonitor!
     var hotKeyRef: EventHotKeyRef?
     var keyboardEventMonitor: Any?
+    var previousApp: NSRunningApplication?
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Create the status bar item
@@ -54,6 +55,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
                 }
                 popover.performClose(nil)
             } else {
+                // Remember the currently active app before we take focus
+                previousApp = NSWorkspace.shared.frontmostApplication
                 popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
                 NSApp.activate(ignoringOtherApps: true)
                 
@@ -92,17 +95,22 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     
     func closePopoverAndPaste() {
         popover.performClose(nil)
-        // Deactivate the app to return focus to the previous application
-        NSApp.hide(nil)
         
-        // Simulate Cmd+V paste after a short delay to allow focus to return
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+        // Activate the previous application explicitly
+        if let prevApp = previousApp {
+            prevApp.activate(options: .activateIgnoringOtherApps)
+        } else {
+            NSApp.hide(nil)
+        }
+        
+        // Simulate Cmd+V paste after giving the previous app time to gain focus
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             self.simulatePaste()
         }
     }
     
     private func simulatePaste() {
-        let source = CGEventSource(stateID: .hidSystemState)
+        let source = CGEventSource(stateID: .combinedSessionState)
         
         // Key down: Cmd + V (keyCode 9 = V)
         let keyDown = CGEvent(keyboardEventSource: source, virtualKey: 9, keyDown: true)

@@ -5,49 +5,6 @@
 	<key>logFormatVersion</key>
 	<integer>12</integer>
 	<key>logs</key>
-	<dict>
-		<key>AD47996A-316D-4510-8624-6488E54CC816</key>
-		<dict>
-			<key>className</key>
-			<string>IDECommandLineBuildLog</string>
-			<key>documentTypeString</key>
-			<string>&lt;nil&gt;</string>
-			<key>domainType</key>
-			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
-			<key>fileName</key>
-			<string>AD47996A-316D-4510-8624-6488E54CC816.xcactivitylog</string>
-			<key>hasPrimaryLog</key>
-			<true/>
-			<key>primaryObservable</key>
-			<dict>
-				<key>highLevelStatus</key>
-				<string>S</string>
-				<key>totalNumberOfAnalyzerIssues</key>
-				<integer>0</integer>
-				<key>totalNumberOfErrors</key>
-				<integer>0</integer>
-				<key>totalNumberOfTestFailures</key>
-				<integer>0</integer>
-				<key>totalNumberOfWarnings</key>
-				<integer>0</integer>
-			</dict>
-			<key>schemeIdentifier-containerName</key>
-			<string>ClipboardManager project</string>
-			<key>schemeIdentifier-schemeName</key>
-			<string>ClipboardManager</string>
-			<key>schemeIdentifier-sharedScheme</key>
-			<integer>1</integer>
-			<key>signature</key>
-			<string>Cleaning project ClipboardManager with scheme ClipboardManager and configuration Release</string>
-			<key>timeStartedRecording</key>
-			<real>791799947.90775895</real>
-			<key>timeStoppedRecording</key>
-			<real>791799948.16071296</real>
-			<key>title</key>
-			<string>Cleaning project ClipboardManager with scheme ClipboardManager and configuration Release</string>
-			<key>uniqueIdentifier</key>
-			<string>AD47996A-316D-4510-8624-6488E54CC816</string>
-		</dict>
-	</dict>
+	<dict/>
 </dict>
 </plist>
