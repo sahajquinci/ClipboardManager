@@ -103,13 +103,32 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
             NSApp.hide(nil)
         }
         
-        // Simulate Cmd+V paste after giving the previous app time to gain focus
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+        // Use a longer delay and try multiple paste strategies
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
             self.simulatePaste()
         }
     }
     
     private func simulatePaste() {
+        // Strategy 1: Use AppleScript to send Cmd+V (most reliable, uses apple-events entitlement)
+        let script = """
+            tell application "System Events"
+                keystroke "v" using command down
+            end tell
+            """
+        if let appleScript = NSAppleScript(source: script) {
+            var error: NSDictionary?
+            appleScript.executeAndReturnError(&error)
+            if error != nil {
+                // Fallback: CGEvent approach
+                pasteWithCGEvent()
+            }
+        } else {
+            pasteWithCGEvent()
+        }
+    }
+    
+    private func pasteWithCGEvent() {
         let source = CGEventSource(stateID: .combinedSessionState)
         
         // Key down: Cmd + V (keyCode 9 = V)
