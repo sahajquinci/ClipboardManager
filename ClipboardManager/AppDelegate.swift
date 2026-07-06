@@ -20,6 +20,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     var clipboardMonitor: ClipboardMonitor!
     var hotKeyRef: EventHotKeyRef?
     var keyboardEventMonitor: Any?
+    var previousApp: NSRunningApplication?
+    private var didPromptForAccessibilityThisLaunch = false
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Create the status bar item
@@ -54,6 +56,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
                 }
                 popover.performClose(nil)
             } else {
+                // Remember the currently active app before we take focus
+                previousApp = NSWorkspace.shared.frontmostApplication
                 popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
                 NSApp.activate(ignoringOtherApps: true)
                 
@@ -88,6 +92,61 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         popover.performClose(nil)
         // Deactivate the app to return focus to the previous application
         NSApp.hide(nil)
+    }
+    
+    func closePopoverAndPaste() {
+        // Close the popover first
+        popover.performClose(nil)
+        
+        // Check accessibility permission (required for synthetic key events).
+        // Prompt at most once per launch to avoid spamming System Settings.
+        if !ensureAccessibilityPermission() {
+            NSApp.hide(nil)
+            return
+        }
+        
+        // Activate the previous app
+        if let prevApp = self.previousApp {
+            prevApp.activate(options: .activateIgnoringOtherApps)
+        } else {
+            NSApp.hide(nil)
+        }
+        
+        // Wait for focus to transfer, then paste
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.performPaste()
+        }
+    }
+
+    private func ensureAccessibilityPermission() -> Bool {
+        if AXIsProcessTrusted() {
+            return true
+        }
+
+        if !didPromptForAccessibilityThisLaunch {
+            didPromptForAccessibilityThisLaunch = true
+            let options = [kAXTrustedCheckOptionPrompt.takeRetainedValue(): true] as CFDictionary
+            _ = AXIsProcessTrustedWithOptions(options)
+            print("ClipboardManager: Accessibility permission not granted - prompting user")
+        }
+
+        return false
+    }
+    
+    private func performPaste() {
+        let source = CGEventSource(stateID: .combinedSessionState)
+        source?.setLocalEventsFilterDuringSuppressionState(.permitLocalKeyboardEvents,
+                                                           state: .eventSuppressionStateSuppressionInterval)
+        
+        // keyCode 9 = V key
+        let keyDown = CGEvent(keyboardEventSource: source, virtualKey: 9, keyDown: true)
+        let keyUp = CGEvent(keyboardEventSource: source, virtualKey: 9, keyDown: false)
+        
+        keyDown?.flags = .maskCommand
+        keyUp?.flags = .maskCommand
+        
+        keyDown?.post(tap: .cgAnnotatedSessionEventTap)
+        keyUp?.post(tap: .cgAnnotatedSessionEventTap)
     }
     
     func registerHotkey() {

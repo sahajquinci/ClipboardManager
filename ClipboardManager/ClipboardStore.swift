@@ -79,10 +79,12 @@ class ClipboardStore: ObservableObject {
     
     private let saveKey = "ClipboardHistory"
     private let maxItems = 1000 // Reasonable limit to prevent excessive memory usage
+    private let storageManager = StorageManager.shared
     
     private init() {
         loadItems()
         recalculateTotalSize()
+        enforceStorageLimit()
     }
     
     private func itemSize(_ content: ClipboardContent) -> Int {
@@ -126,6 +128,9 @@ class ClipboardStore: ObservableObject {
             items = Array(items.prefix(maxItems))
         }
         
+        // Enforce 200MB storage limit
+        enforceStorageLimit()
+        
         saveItems()
     }
     
@@ -161,6 +166,14 @@ class ClipboardStore: ObservableObject {
     private func saveItems() {
         if let encoded = try? JSONEncoder().encode(items) {
             UserDefaults.standard.set(encoded, forKey: saveKey)
+        }
+    }
+    
+    private func enforceStorageLimit() {
+        let result = storageManager.enforceStorageLimit(items: items, currentTotalBytes: totalBytes)
+        if result.items.count != items.count {
+            items = result.items
+            totalBytes = result.totalBytes
         }
     }
     

@@ -13,6 +13,9 @@
 		A1000007000000010000001 /* ClipboardStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000008000000010000001 /* ClipboardStore.swift */; };
 		A1000009000000010000001 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000010000000010000001 /* ContentView.swift */; };
 		A1000011000000010000001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1000012000000010000001 /* Assets.xcassets */; };
+		B2000001000000010000001 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2000002000000010000001 /* StorageManager.swift */; };
+		C3000001000000010000001 /* StorageManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3000002000000010000001 /* StorageManagerTests.swift */; };
+		C3000003000000010000001 /* ClipboardStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3000004000000010000001 /* ClipboardStoreTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,10 +28,21 @@
 		A1000012000000010000001 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A1000014000000010000001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A1000015000000010000001 /* ClipboardManager.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ClipboardManager.entitlements; sourceTree = "<group>"; };
+		B2000002000000010000001 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		C3000005000000010000001 /* ClipboardManagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ClipboardManagerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3000002000000010000001 /* StorageManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManagerTests.swift; sourceTree = "<group>"; };
+		C3000004000000010000001 /* ClipboardStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardStoreTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		A1000016000000010000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C3000007000000010000001 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -42,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				A1000018000000010000001 /* ClipboardManager */,
+				C3000006000000010000001 /* ClipboardManagerTests */,
 				A1000019000000010000001 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -50,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				A1000013000000010000001 /* ClipboardManager.app */,
+				C3000005000000010000001 /* ClipboardManagerTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -61,12 +77,22 @@
 				A1000004000000010000001 /* AppDelegate.swift */,
 				A1000006000000010000001 /* ClipboardMonitor.swift */,
 				A1000008000000010000001 /* ClipboardStore.swift */,
+				B2000002000000010000001 /* StorageManager.swift */,
 				A1000010000000010000001 /* ContentView.swift */,
 				A1000012000000010000001 /* Assets.xcassets */,
 				A1000014000000010000001 /* Info.plist */,
 				A1000015000000010000001 /* ClipboardManager.entitlements */,
 			);
 			path = ClipboardManager;
+			sourceTree = "<group>";
+		};
+		C3000006000000010000001 /* ClipboardManagerTests */ = {
+			isa = PBXGroup;
+			children = (
+				C3000002000000010000001 /* StorageManagerTests.swift */,
+				C3000004000000010000001 /* ClipboardStoreTests.swift */,
+			);
+			path = ClipboardManagerTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -89,6 +115,23 @@
 			productReference = A1000013000000010000001 /* ClipboardManager.app */;
 			productType = "com.apple.product-type.application";
 		};
+		C3000008000000010000001 /* ClipboardManagerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C3000009000000010000001 /* Build configuration list for PBXNativeTarget "ClipboardManagerTests" */;
+			buildPhases = (
+				C3000010000000010000001 /* Sources */,
+				C3000007000000010000001 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C3000011000000010000001 /* PBXTargetDependency */,
+			);
+			name = ClipboardManagerTests;
+			productName = ClipboardManagerTests;
+			productReference = C3000005000000010000001 /* ClipboardManagerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -101,6 +144,10 @@
 				TargetAttributes = {
 					A1000020000000010000001 = {
 						CreatedOnToolsVersion = 15.0;
+					};
+					C3000008000000010000001 = {
+						CreatedOnToolsVersion = 15.0;
+						TestTargetID = A1000020000000010000001;
 					};
 				};
 			};
@@ -118,6 +165,7 @@
 			projectRoot = "";
 			targets = (
 				A1000020000000010000001 /* ClipboardManager */,
+				C3000008000000010000001 /* ClipboardManagerTests */,
 			);
 		};
 /* End PBXProject section */
@@ -142,11 +190,39 @@
 				A1000003000000010000001 /* AppDelegate.swift in Sources */,
 				A1000005000000010000001 /* ClipboardMonitor.swift in Sources */,
 				A1000007000000010000001 /* ClipboardStore.swift in Sources */,
+				B2000001000000010000001 /* StorageManager.swift in Sources */,
 				A1000009000000010000001 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C3000010000000010000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C3000001000000010000001 /* StorageManagerTests.swift in Sources */,
+				C3000003000000010000001 /* ClipboardStoreTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXContainerItemProxy section */
+		C3000012000000010000001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A1000024000000010000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A1000020000000010000001;
+			remoteInfo = ClipboardManager;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXTargetDependency section */
+		C3000011000000010000001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A1000020000000010000001 /* ClipboardManager */;
+			targetProxy = C3000012000000010000001 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		A1000026000000010000001 /* Debug */ = {
@@ -323,6 +399,38 @@
 			};
 			name = Release;
 		};
+		C3000013000000010000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.clipboard.manager.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ClipboardManager.app/Contents/MacOS/ClipboardManager";
+			};
+			name = Debug;
+		};
+		C3000014000000010000001 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.clipboard.manager.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ClipboardManager.app/Contents/MacOS/ClipboardManager";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -340,6 +448,15 @@
 			buildConfigurations = (
 				A1000026000000010000001 /* Debug */,
 				A1000027000000010000001 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C3000009000000010000001 /* Build configuration list for PBXNativeTarget "ClipboardManagerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C3000013000000010000001 /* Debug */,
+				C3000014000000010000001 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
