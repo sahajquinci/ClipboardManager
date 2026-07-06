@@ -15,6 +15,7 @@ struct ContentView: View {
     @State private var showingClearAlert = false
     @State private var selectedItemId: UUID?
     @State private var launchAtLogin: Bool = UserDefaults.standard.bool(forKey: "launchAtLogin")
+    @State private var autoPasteOnEnter: Bool = UserDefaults.standard.object(forKey: "autoPasteOnEnter") as? Bool ?? true
     @State private var filterText = true
     @State private var filterLinks = true
     @State private var filterImages = true
@@ -98,6 +99,16 @@ struct ContentView: View {
                 .controlSize(.mini)
                 .onChange(of: launchAtLogin) { newValue in
                     setLaunchAtLogin(enabled: newValue)
+                }
+
+                Toggle(isOn: $autoPasteOnEnter) {
+                    Text("Auto Paste on Enter")
+                        .font(.caption)
+                }
+                .toggleStyle(.switch)
+                .controlSize(.mini)
+                .onChange(of: autoPasteOnEnter) { newValue in
+                    UserDefaults.standard.set(newValue, forKey: "autoPasteOnEnter")
                 }
                 
                 Button(action: {
@@ -269,7 +280,11 @@ struct ContentView: View {
     
     private func selectAndCopyItem(_ item: ClipboardItem) {
         copyItem(item)
-        appDelegate.closePopoverAndPaste()
+        if autoPasteOnEnter {
+            appDelegate.closePopoverAndPaste()
+        } else {
+            appDelegate.closePopover()
+        }
     }
     
     private func setLaunchAtLogin(enabled: Bool) {
