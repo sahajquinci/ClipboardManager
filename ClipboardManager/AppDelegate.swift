@@ -21,6 +21,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     var hotKeyRef: EventHotKeyRef?
     var keyboardEventMonitor: Any?
     var previousApp: NSRunningApplication?
+    private var didPromptForAccessibilityThisLaunch = false
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Create the status bar item
@@ -94,52 +95,58 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     }
     
     func closePopoverAndPaste() {
+        // Close the popover first
         popover.performClose(nil)
         
-        // Activate the previous application explicitly
-        if let prevApp = previousApp {
+        // Check accessibility permission (required for synthetic key events).
+        // Prompt at most once per launch to avoid spamming System Settings.
+        if !ensureAccessibilityPermission() {
+            NSApp.hide(nil)
+            return
+        }
+        
+        // Activate the previous app
+        if let prevApp = self.previousApp {
             prevApp.activate(options: .activateIgnoringOtherApps)
         } else {
             NSApp.hide(nil)
         }
         
-        // Use a longer delay and try multiple paste strategies
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-            self.simulatePaste()
+        // Wait for focus to transfer, then paste
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.performPaste()
         }
     }
-    
-    private func simulatePaste() {
-        // Strategy 1: Use AppleScript to send Cmd+V (most reliable, uses apple-events entitlement)
-        let script = """
-            tell application "System Events"
-                keystroke "v" using command down
-            end tell
-            """
-        if let appleScript = NSAppleScript(source: script) {
-            var error: NSDictionary?
-            appleScript.executeAndReturnError(&error)
-            if error != nil {
-                // Fallback: CGEvent approach
-                pasteWithCGEvent()
-            }
-        } else {
-            pasteWithCGEvent()
+
+    private func ensureAccessibilityPermission() -> Bool {
+        if AXIsProcessTrusted() {
+            return true
         }
+
+        if !didPromptForAccessibilityThisLaunch {
+            didPromptForAccessibilityThisLaunch = true
+            let options = [kAXTrustedCheckOptionPrompt.takeRetainedValue(): true] as CFDictionary
+            _ = AXIsProcessTrustedWithOptions(options)
+            print("ClipboardManager: Accessibility permission not granted - prompting user")
+        }
+
+        return false
     }
     
-    private func pasteWithCGEvent() {
+    private func performPaste() {
         let source = CGEventSource(stateID: .combinedSessionState)
+        source?.setLocalEventsFilterDuringSuppressionState(.permitLocalKeyboardEvents,
+                                                           state: .eventSuppressionStateSuppressionInterval)
         
-        // Key down: Cmd + V (keyCode 9 = V)
+        // keyCode 9 = V key
         let keyDown = CGEvent(keyboardEventSource: source, virtualKey: 9, keyDown: true)
-        keyDown?.flags = .maskCommand
-        keyDown?.post(tap: .cghidEventTap)
-        
-        // Key up: Cmd + V
         let keyUp = CGEvent(keyboardEventSource: source, virtualKey: 9, keyDown: false)
+        
+        keyDown?.flags = .maskCommand
         keyUp?.flags = .maskCommand
-        keyUp?.post(tap: .cghidEventTap)
+        
+        keyDown?.post(tap: .cgAnnotatedSessionEventTap)
+        keyUp?.post(tap: .cgAnnotatedSessionEventTap)
     }
     
     func registerHotkey() {
